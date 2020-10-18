@@ -5,6 +5,10 @@ from random import randint
 from pythagorean_tuples import pythagorean_triples
 
 
+def is_primitive(t):
+    return math.gcd(t[0], t[1]) == 1 and math.gcd(t[1], t[2]) == 1 and math.gcd(t[2], t[0]) == 1
+
+
 class TestExceptions(unittest.TestCase):
     def test_not_integer(self):
         self.assertRaises(TypeError, pythagorean_triples, 3.14, "TypeError has not been raised")
@@ -27,7 +31,7 @@ class TestAPrimitive(unittest.TestCase):
         res = pythagorean_triples(2 ** randint(10, 20), True)
         for t in res:
             self.assertEqual(t[2] ** 2, t[0] ** 2 + t[1] ** 2, f"{t} is not Pythagorean triple")
-            self.assertEqual(1, math.gcd(*t), f"{t} is not primitive")
+            self.assertTrue(is_primitive(t), f"{t} is not primitive")
             for n in t:
                 self.assertIs(int, type(n))
 
@@ -35,7 +39,7 @@ class TestAPrimitive(unittest.TestCase):
         res = pythagorean_triples(2 ** randint(100, 200), True)
         for t in res:
             self.assertEqual(t[2] ** 2, t[0] ** 2 + t[1] ** 2, f"{t} is not Pythagorean triple")
-            self.assertEqual(1, math.gcd(*t), f"{t} is not primitive")
+            self.assertTrue(is_primitive(t), f"{t} is not primitive")
             for n in t:
                 self.assertIs(int, type(n))
 
@@ -91,7 +95,7 @@ class TestBPrimitive(unittest.TestCase):
         res = pythagorean_triples(r, True)
         for t in res:
             self.assertEqual(t[2] ** 2, t[0] ** 2 + t[1] ** 2, f"{t} is not Pythagorean triple")
-            self.assertEqual(1, math.gcd(*t), f"{t} is not primitive")
+            self.assertTrue(is_primitive(t), f"{t} is not primitive")
             for n in t:
                 self.assertIs(int, type(n))
 
@@ -102,7 +106,7 @@ class TestBPrimitive(unittest.TestCase):
         res = pythagorean_triples(r, True)
         for t in res:
             self.assertEqual(t[2] ** 2, t[0] ** 2 + t[1] ** 2, f"{t} is not Pythagorean triple")
-            self.assertEqual(1, math.gcd(*t), f"{t} is not primitive")
+            self.assertTrue(is_primitive(t), f"{t} is not primitive")
             for n in t:
                 self.assertIs(int, type(n))
 
@@ -166,7 +170,7 @@ class TestCPrimitive(unittest.TestCase):
         res = pythagorean_triples(randint(10, 100) * 2, True)
         for t in res:
             self.assertEqual(t[2] ** 2, t[0] ** 2 + t[1] ** 2, f"{t} is not Pythagorean triple")
-            self.assertEqual(1, math.gcd(*t), f"{t} is not primitive")
+            self.assertTrue(is_primitive(t), f"{t} is not primitive")
             for n in t:
                 self.assertIs(int, type(n))
 
@@ -174,7 +178,7 @@ class TestCPrimitive(unittest.TestCase):
         res = pythagorean_triples(randint(100, 100000) * 2, True)
         for t in res:
             self.assertEqual(t[2] ** 2, t[0] ** 2 + t[1] ** 2, f"{t} is not Pythagorean triple")
-            self.assertEqual(1, math.gcd(*t), f"{t} is not primitive")
+            self.assertTrue(is_primitive(t), f"{t} is not primitive")
             for n in t:
                 self.assertIs(int, type(n))
 
