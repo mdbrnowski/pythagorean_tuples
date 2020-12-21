@@ -185,7 +185,7 @@ class TestCPrimitive(unittest.TestCase):
 
 class TestC(unittest.TestCase):
     def test_12(self):
-        self.assertEqual({(12, 5, 13), (12, 35, 37)}, pythagorean_triples(12, False))
+        self.assertEqual({(12, 5, 13), (12, 35, 37), (12, 9, 15), (12, 16, 20)}, pythagorean_triples(12, False))
 
     def test_14(self):
         self.assertEqual({(14, 48, 50)}, pythagorean_triples(14, False))
