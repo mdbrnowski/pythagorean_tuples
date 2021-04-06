@@ -1,4 +1,4 @@
-from itertools import product
+from itertools import product, count
 from math import log, isqrt, ceil, prod
 from collections import Counter
 
@@ -49,7 +49,10 @@ def _prime_factors(n: int) -> list:
     while n % 2 == 0:
         factors.append(2)
         n //= 2
-    for i in range(3, isqrt(n) + 1, 2):
+    for i in count(3, 2):
+        if i ** 2 > n:
+            break
+
         while n % i == 0:
             factors.append(i)
             n //= i
