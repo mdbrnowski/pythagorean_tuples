@@ -84,14 +84,27 @@ def _pythagorean_triples_BP(a: int, factors: Counter):
     return triples
 
 
+def _product_powers(powers_table: list, limit: int, product=1):
+    if not powers_table:
+        yield product
+        return
+
+    powers, *rest = powers_table
+    for power in powers:
+        if product * power >= limit:
+            break
+        yield from _product_powers(rest, limit, product * power)
+
+
 def _pythagorean_triples_B(a: int, factors: Counter):
-    # TODO: minimise the number of possible deltas (without `itertools.product()`)
     triples = set()
     factors_list = list(factors)
     ranges = [range(0, min(ceil(log(a, factor)), 2 * factors[factor] + 1)) for factor in factors_list]
-    for powers in product(*ranges):
-        if (d := prod(factors_list[i] ** power for i, power in enumerate(powers))) < a:
-            triples.add(_TRIPLE(a, d))
+    
+    powers_table = [[factor ** exponent for exponent in exponents] 
+            for factor, exponents in zip(factors_list, ranges)]
+    for d in _product_powers(powers_table, a):
+        triples.add(_TRIPLE(a, d))
     return triples
 
 
@@ -109,12 +122,13 @@ def _pythagorean_triples_CP(a: int, factors: Counter):
 
 
 def _pythagorean_triples_C(a: int, factors: Counter):
-    # TODO: minimise the number of possibilities (without `itertools.product()`)
     triples = set()
     factors_list = list(factors)
     ranges = [range(0, min(ceil(log(a, factor)), 2 * factors[factor] + 1)) for factor in factors_list]
     ranges[0] = range(1, min(ceil(log(a, 2)), 2 * factors[2]))    # concerns the factor 2
-    for powers in product(*ranges):
-        if (d := prod(factors_list[i] ** power for i, power in enumerate(powers))) < a:
-            triples.add(_TRIPLE(a, d))
+    
+    powers_table = [[factor ** exponent for exponent in exponents] 
+            for factor, exponents in zip(factors_list, ranges)]
+    for d in _product_powers(powers_table, a):
+        triples.add(_TRIPLE(a, d))
     return triples
