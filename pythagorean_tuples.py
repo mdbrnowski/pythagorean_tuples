@@ -1,5 +1,5 @@
-from itertools import product, count
-from math import log, isqrt, ceil, prod
+from itertools import count
+from math import log, ceil
 from collections import Counter
 
 
@@ -101,8 +101,8 @@ def _pythagorean_triples_B(a: int, factors: Counter):
     factors_list = list(factors)
     ranges = [range(0, min(ceil(log(a, factor)), 2 * factors[factor] + 1)) for factor in factors_list]
     
-    powers_table = [[factor ** exponent for exponent in exponents] 
-            for factor, exponents in zip(factors_list, ranges)]
+    powers_table = [[factor ** exponent for exponent in exponents]
+                    for factor, exponents in zip(factors_list, ranges)]
     for d in _product_powers(powers_table, a):
         triples.add(_TRIPLE(a, d))
     return triples
@@ -127,8 +127,8 @@ def _pythagorean_triples_C(a: int, factors: Counter):
     ranges = [range(0, min(ceil(log(a, factor)), 2 * factors[factor] + 1)) for factor in factors_list]
     ranges[0] = range(1, min(ceil(log(a, 2)), 2 * factors[2]))    # concerns the factor 2
     
-    powers_table = [[factor ** exponent for exponent in exponents] 
-            for factor, exponents in zip(factors_list, ranges)]
+    powers_table = [[factor ** exponent for exponent in exponents]
+                    for factor, exponents in zip(factors_list, ranges)]
     for d in _product_powers(powers_table, a):
         triples.add(_TRIPLE(a, d))
     return triples
